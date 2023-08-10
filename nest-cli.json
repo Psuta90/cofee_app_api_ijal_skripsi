@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api_cofee_app/src",
+  "monorepo": true,
+  "root": "apps/api_cofee_app",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/api_cofee_app/tsconfig.app.json"
+  },
+  "projects": {
+    "api_cofee_app": {
+      "type": "application",
+      "root": "apps/api_cofee_app",
+      "entryFile": "main",
+      "sourceRoot": "apps/api_cofee_app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api_cofee_app/tsconfig.app.json"
+      }
+    },
+    "jwt": {
+      "type": "library",
+      "root": "libs/jwt",
+      "entryFile": "index",
+      "sourceRoot": "libs/jwt/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/jwt/tsconfig.lib.json"
+      }
+    },
+    "utils": {
+      "type": "library",
+      "root": "libs/utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/utils/tsconfig.lib.json"
+      }
+    },
+    "prisma": {
+      "type": "library",
+      "root": "libs/prisma",
+      "entryFile": "index",
+      "sourceRoot": "libs/prisma/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/prisma/tsconfig.lib.json"
+      }
+    }
+  }
+}
