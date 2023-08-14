@@ -1,2 +1,17 @@
+build:
+  base:
+    context: .
+  api:
+    context: api
+    dockerfile: Dockerfile
 deploy:
   compose: docker-compose.yml
+dependencies:
+  api:
+    repository: https://github.com/Psuta90/cofee_app_api_ijal_skripsi
+    manifest: okteto.yaml
+    branch: main
+    variables:
+      - ENVIRONMENT: .env
+    wait: true
+    timeout: 15m
