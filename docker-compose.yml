@@ -11,19 +11,19 @@ services:
       - .env
     ports:
       - 3000:3000
-    depends_on:
-      - mysqlcofeeapp
+    # depends_on:
+    #   - mysqlcofeeapp
 
-  mysqlcofeeapp:
-    image: mysql:latest
-    container_name: mysqlcofeeapp
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: adriansyahganteng
-      MYSQL_DATABASE: cofeeapp
-      MYSQL_USER: cofeeapp
-      MYSQL_PASSWORD: adriansyahganteng
-    volumes:
-      - ./data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+  # mysqlcofeeapp:
+  #   image: mysql:latest
+  #   container_name: mysqlcofeeapp
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: adriansyahganteng
+  #     MYSQL_DATABASE: cofeeapp
+  #     MYSQL_USER: cofeeapp
+  #     MYSQL_PASSWORD: adriansyahganteng
+  #   volumes:
+  #     - ./data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
