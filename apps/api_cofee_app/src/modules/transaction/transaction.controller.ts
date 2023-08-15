@@ -54,11 +54,8 @@ export class TransactionController {
     return await this.transactionService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
-  }
-
+  @UseGuards(JwtAuthGuard,RoleGuardGuard)
+  @Roles(1)
   @Patch('list/:id')
   update(@Param('id') id: string) {
     return this.transactionService.update(+id);
