@@ -17,14 +17,15 @@ model RoleUser {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String
-  password  String
-  address   String
-  role_id   Int
-  roleUser  RoleUser @relation(fields: [role_id], references: [id])
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  email            String             @unique
+  name             String
+  password         String
+  address          String
+  role_id          Int
+  roleUser         RoleUser           @relation(fields: [role_id], references: [id])
+  User_Transaction User_Transaction[]
 }
 
 model Product_Category {
@@ -48,8 +49,8 @@ model Product {
 
 model Payment_Method {
   id               Int                @id @default(autoincrement())
-  name_bank        Int
-  no_rekening      Int
+  name_bank        String
+  no_rekening      BigInt
   User_Transaction User_Transaction[]
 }
 
@@ -58,6 +59,10 @@ model User_Transaction {
   product_id        Int
   final_amount      Int
   payment_method_id Int
+  user_id           Int
+  status String
+  stock Int
+  User User @relation(fields: [user_id], references: [id])
   payment_method    Payment_Method @relation(fields: [payment_method_id], references: [id])
   product           Product        @relation(fields: [product_id], references: [id])
 }
