@@ -43,7 +43,8 @@ model Product {
   harga               Int
   image               String
   product_category_id Int
-  product_category    Product_Category ?   @relation(fields: [product_category_id], references: [id])
+  isDeleted Boolean @default(false)
+  product_category    Product_Category  @relation(fields: [product_category_id], references: [id])
   User_Transaction    User_Transaction[]
 }
 
