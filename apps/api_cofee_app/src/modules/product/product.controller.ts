@@ -45,16 +45,12 @@ export class ProductController {
     return await this.productService.addProduct(productDto, file);
   }
 
-  @UseGuards(JwtAuthGuard,RoleGuardGuard)
-  @Roles(2)
   @Get('/list')
   async findAll() {
     
     return await this.productService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard,RoleGuardGuard)
-  @Roles(2)
   @Get('/list/:id')
   async findDetail(@Param('id') id : number) {
     return await this.productService.findOne(+id);

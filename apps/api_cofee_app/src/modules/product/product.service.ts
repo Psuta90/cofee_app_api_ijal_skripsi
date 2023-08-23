@@ -64,7 +64,11 @@ export class ProductService {
 
   async findAll() {
     try {
-      const getAllProduct = await this.utilService.db.product.findMany()
+      const getAllProduct = await this.utilService.db.product.findMany({
+        include : {
+          product_category: true
+        }
+      })
 
       if(getAllProduct[0] !== undefined){
         
