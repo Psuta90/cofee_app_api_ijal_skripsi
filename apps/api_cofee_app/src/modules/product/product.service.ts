@@ -116,6 +116,30 @@ export class ProductService {
     }
   }
 
+  async findCategoryProduct() {
+    try {
+      const findAllCategoryProduct = await this.utilService.db.product_Category.findMany()
+      
+      if (findAllCategoryProduct.length > 0){
+        return await this.utilService.response.success({
+          code : 200,
+          data : findAllCategoryProduct,
+          message : "berhasil mendapatkan package category"
+        })
+      }else{
+        return await this.utilService.response.error({
+          code : 400,
+          data : findAllCategoryProduct,
+          message : "data tidak ada"
+        })
+      }
+
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
   async updateproduct (id : number,productUpdateDto : ProductUpdateDto, file:Express.Multer.File) {
 
     try {      
