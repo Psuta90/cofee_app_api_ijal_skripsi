@@ -2,16 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UtilsService } from '@app/utils';
+import { join } from 'path';
+import * as fs from 'fs-extra';
+import { Express } from 'express';
 
 @Injectable()
 export class UserService {
   constructor(
     private utilService : UtilsService
   ){}
-  
-  // create(createUserDto: CreateUserDto) {
-  //   return 'This action adds a new user';
-  // }
 
   async findAll() {
     try {
@@ -92,7 +91,41 @@ export class UserService {
     }
   }
 
-  async confirmTransaction() {
+  async confirmTransaction(id :number, file : Express.Multer.File) {
     
+    const rootdirectory = `${process.cwd()}/public`
+    const folderFile = 'payment_user_image'
+    const nameFile = `${this.utilService.toolsString.generateRandomString(10)}.${file.mimetype.split('/')[1]}`
+    const filepath = join(rootdirectory,folderFile,nameFile)
+
+    try {
+
+      await fs.ensureDir(join(rootdirectory,folderFile))
+      await fs.writeFile(filepath,file.buffer);
+
+      const updateTransaction = await this.utilService.db.user_Transaction.update({
+        where : {id,user_id : this.utilService.request.user.user_id},
+        data : {
+          confirm_payment_image : join(folderFile,nameFile)
+        }
+      })
+
+      if (updateTransaction.id){
+        return await this.utilService.response.success({
+          data : updateTransaction,
+          message : "terimakasih sudah konfirmasi pembayaran silahkan tunggu untuk pembayaranya valid atau tidak"
+        })
+      }
+
+      
+    } catch (error) {
+      console.log(error);
+      return await this.utilService.response.error({
+        code : 400,
+        data : error,
+        message : "gagal memasukan pembayaran"
+      })
+      
+    }
   }
 }

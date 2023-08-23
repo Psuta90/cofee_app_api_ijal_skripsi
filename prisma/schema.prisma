@@ -63,6 +63,7 @@ model User_Transaction {
   user_id           Int
   status String
   stock Int
+  confirm_payment_image String?
   User User @relation(fields: [user_id], references: [id])
   payment_method    Payment_Method? @relation(fields: [payment_method_id], references: [id])
   product           Product?        @relation(fields: [product_id], references: [id])
