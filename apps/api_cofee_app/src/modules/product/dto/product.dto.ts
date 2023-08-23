@@ -11,4 +11,6 @@ export class ProductDto {
     harga : number;
     @IsNotEmpty()
     product_category_id : number;
+    @IsNotEmpty()   
+    description : string
 }
