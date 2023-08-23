@@ -75,10 +75,6 @@ export class ProductController {
     }),
   ) file : Express.Multer.File ) {
     
-    console.log("body controller", productupdatedto);
-    console.log("id controller", id);
-    
-    
     return await this.productService.updateproduct(id, productupdatedto, file);
 
   }

@@ -9,9 +9,9 @@ export class UserService {
     private utilService : UtilsService
   ){}
   
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  // create(createUserDto: CreateUserDto) {
+  //   return 'This action adds a new user';
+  // }
 
   async findAll() {
     try {
@@ -40,13 +40,35 @@ export class UserService {
     }
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} user`;
-  // }
+  async findUserTransaction() {
+    try {
+      const user_id = this.utilService.request.user.user_id
+      const listTransaction = await this.utilService.db.user_Transaction.findMany({
+        where : {
+          user_id
+        }
+      })
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+      if (listTransaction.length > 0){
+        return this.utilService.response.success({
+          data : listTransaction,
+          message : "berhasil"
+        })
+      }else{
+        return this.utilService.response.error({
+          code : 400,
+          data : listTransaction,
+          message : "data tidak di temukan"
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      return this.utilService.response.error({
+        data : error,
+        message : "data tidak di temukan"
+      }) 
+    }
+  }
 
   async remove(id: number) {
     try {
@@ -68,6 +90,9 @@ export class UserService {
       return this.utilService.response.error({code : 400, data : error, message: "telah terjadi error"})
       
     }
-    // return `This action removes a #${id} user`;
+  }
+
+  async confirmTransaction() {
+    
   }
 }

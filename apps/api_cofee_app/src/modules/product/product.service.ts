@@ -65,6 +65,7 @@ export class ProductService {
   async findAll() {
     try {
       const getAllProduct = await this.utilService.db.product.findMany({
+        where:{isDeleted:false},
         include : {
           product_category: true
         }
@@ -96,7 +97,8 @@ export class ProductService {
 
       const getByID = await this.utilService.db.product.findUnique({
         where : {
-          id
+          id,
+          isDeleted:false
         }
       })
 
@@ -120,7 +122,8 @@ export class ProductService {
       
       const findproduct = await this.utilService.db.product.findUnique({
         where : {
-          id
+          id,
+          isDeleted:false
         }
       })
 
@@ -231,8 +234,11 @@ export class ProductService {
   async removeproduct(id:number){
     try {
 
-      const findproduct = await this.utilService.db.product.delete({
-        where : {id}
+      const findproduct = await this.utilService.db.product.update({
+        where : {id},
+        data : {
+          isDeleted:true
+        }
       })
 
       if (findproduct){

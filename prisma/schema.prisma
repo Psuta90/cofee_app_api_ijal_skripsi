@@ -43,7 +43,8 @@ model Product {
   harga               Int
   image               String
   product_category_id Int
-  product_category    Product_Category   @relation(fields: [product_category_id], references: [id])
+  isDeleted Boolean @default(false)
+  product_category    Product_Category  @relation(fields: [product_category_id], references: [id])
   User_Transaction    User_Transaction[]
 }
 
@@ -63,6 +64,6 @@ model User_Transaction {
   status String
   stock Int
   User User @relation(fields: [user_id], references: [id])
-  payment_method    Payment_Method @relation(fields: [payment_method_id], references: [id])
-  product           Product        @relation(fields: [product_id], references: [id])
+  payment_method    Payment_Method? @relation(fields: [payment_method_id], references: [id])
+  product           Product?        @relation(fields: [product_id], references: [id])
 }
