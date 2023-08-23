@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -37,4 +37,42 @@ export class UserController {
   async remove(@Param('id') id: string) {
     return await this.userService.remove(+id);
   }
+
+  @UseGuards(JwtAuthGuard,RoleGuardGuard)
+  @Roles(2)
+  @Get('transaction/list')
+  async findUserTransaction() {
+    return await this.userService.findUserTransaction();
+  }
+
+  @UseGuards(JwtAuthGuard,RoleGuardGuard)
+  @Roles(2)
+  @Patch('transaction/confirm/:id')
+  async confirmTransaction(@Param('id', ParseIntPipe) id : number ) {
+    return await this.userService.confirmTransaction();
+  }
+
+
+
+
+
+  // async UpdateProduct(@Param('id', ParseIntPipe) id : number, @Body(new TransformIntPipe()) productupdatedto : ProductUpdateDto, @UploadedFile(
+  //   new ParseFilePipeBuilder()
+  //   .addFileTypeValidator({
+  //     fileType: new RegExp(/[^\s]+(.*?).(jpg|jpeg|png|JPG|JPEG|PNG)$/),
+  //   })
+  //   .addMaxSizeValidator({
+  //     maxSize: 1000000 * 10
+  //   })
+  //   .build({
+  //     fileIsRequired: false,
+  //     errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+  //   }),
+  // ) file : Express.Multer.File ) {
+    
+  //   return await this.productService.updateproduct(id, productupdatedto, file);
+
+  // }
+
+
 }
