@@ -17,6 +17,14 @@ import { ProductUpdateDto } from './dto/product-update.dto';
 export class ProductController {
   constructor(private readonly productService: ProductService, private utilService:UtilsService ) {}
 
+
+  @UseGuards(JwtAuthGuard,RoleGuardGuard)
+  @Roles(1)
+  @Get('/category/list')
+  async findProductCategory(){
+    return await this.productService.findCategoryProduct()
+    
+  }
   @UseGuards(JwtAuthGuard,RoleGuardGuard)
   @Roles(1)
   @Post('/addCategory')
