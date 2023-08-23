@@ -38,10 +38,11 @@ model Product_Category {
 model Product {
   id                  Int                @id @default(autoincrement())
   createdAt           DateTime           @default(now())
-  name                String             @unique
+  name                String             
   stock               Int
   harga               Int
   image               String
+  description         String
   product_category_id Int
   isDeleted Boolean @default(false)
   product_category    Product_Category  @relation(fields: [product_category_id], references: [id])
