@@ -24,7 +24,7 @@ model User {
   password         String
   address          String
   role_id          Int
-  roleUser         RoleUser           @relation(fields: [role_id], references: [id])
+  roleUser         RoleUser?           @relation(fields: [role_id], references: [id])
   User_Transaction User_Transaction[]
 }
 
