@@ -13,7 +13,7 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @UseGuards(JwtAuthGuard,RoleGuardGuard)
-  @Roles(2)
+  @Roles(1)
   @Post("/buy")
   async create(@Body() createTransactionDto: CreateTransactionDto) {
     return await this.transactionService.create(createTransactionDto);
@@ -52,6 +52,13 @@ export class TransactionController {
   @Get('list')
   async findAll() {
     return await this.transactionService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard,RoleGuardGuard)
+  @Roles(2,1)
+  @Get('listuser')
+  async findOne() {
+    return await this.transactionService.findOneTransaction();
   }
 
   @UseGuards(JwtAuthGuard,RoleGuardGuard)
