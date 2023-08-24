@@ -68,8 +68,8 @@ export class TransactionController {
     return this.transactionService.update(+id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(+id);
+  @Delete('list/:id')
+  async remove(@Param('id') id: string) {
+    return await this.transactionService.remove(+id);
   }
 }
