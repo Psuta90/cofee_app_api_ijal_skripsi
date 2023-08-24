@@ -19,13 +19,28 @@ export class TransactionService {
         },
         include : {
           User :true,
-          product : true
+          product : true,
+          payment_method : true
         }
       })
 
+      
+
       if (getTransaction.length > 0){
+        const datares = getTransaction.map((values) => {
+          const data = {
+            ...values,
+            payment_method: {
+              ...values.payment_method,
+              no_rekening: parseInt(values.payment_method.no_rekening.toString()),
+            }
+           }
+
+           return data
+        })
+
         return await this.utilService.response.success({
-          data : getTransaction,
+          data : datares,
           message : "berhasil mendapatkan data"
         })
       }else{
