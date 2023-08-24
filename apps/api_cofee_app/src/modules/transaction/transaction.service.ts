@@ -11,6 +11,39 @@ export class TransactionService {
 
   constructor(private utilService : UtilsService){}
 
+  async findOneTransaction() {
+    try {
+      const getTransaction = await this.utilService.db.user_Transaction.findMany({
+        where : {
+          user_id : this.utilService.request.user.user_id
+        },
+        include : {
+          User :true,
+          product : true
+        }
+      })
+
+      if (getTransaction.length > 0){
+        return await this.utilService.response.success({
+          data : getTransaction,
+          message : "berhasil mendapatkan data"
+        })
+      }else{
+        return await this.utilService.response.success({
+          data : [],
+          message : "data tidak di temukan"
+        })
+      }
+
+
+    } catch (error) {
+      return this.utilService.response.error({
+        data : error,
+        message : "telah tejadi error"
+      })
+    }
+  }
+
   async create(createTransactionDto: CreateTransactionDto) {
     try {
       
