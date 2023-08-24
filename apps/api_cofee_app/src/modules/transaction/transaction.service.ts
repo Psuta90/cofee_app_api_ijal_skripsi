@@ -248,17 +248,14 @@ export class TransactionService {
     try {
       const getAllTransaction = await this.utilService.db.user_Transaction.findMany({
         include : {
-          product : {
-            select :{
-              name : true
-            }
-          },
+          product : true,
           payment_method : {
             select : {
               name_bank : true,
               no_rekening : true
             }
-          }
+          },
+          User : true
         }
       })
 
@@ -306,7 +303,16 @@ export class TransactionService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async remove(id: number) {
+    try {
+      const updateUserTransaction = await this.utilService.db.user_Transaction.delete({
+        where : {id}
+      })
+
+      return await this.utilService.response.success({data:updateUserTransaction, message : "berhasil delete data"})
+      
+    } catch (error) {
+      return await this.utilService.response.error({code : 400, data : error, message : "terjadi error update transactions"})
+    }
   }
 }
