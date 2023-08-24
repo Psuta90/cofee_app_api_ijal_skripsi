@@ -13,7 +13,7 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @UseGuards(JwtAuthGuard,RoleGuardGuard)
-  @Roles(1)
+  @Roles(2)
   @Post("/buy")
   async create(@Body() createTransactionDto: CreateTransactionDto) {
     return await this.transactionService.create(createTransactionDto);
